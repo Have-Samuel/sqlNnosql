@@ -1,4 +1,4 @@
-# curriculum-databases-projects-template
+# VET-CLINIC
 
 > This repo is to demonstrate my understanding of SQL database management. The files here would create a database in PostgreSQL and update/locate data within the database.
 
