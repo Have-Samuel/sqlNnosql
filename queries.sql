@@ -21,7 +21,7 @@ SELECT name FROM animals WHERE neutered = TRUE AND escape_attempts < 3;
 SELECT name, date_of_birth FROM animals WHERE name IN ('Agumon', 'Pikachu');
 
 /*return Pikachu | 1 & Devimon | 5*/
-SELECT name, escape_attempts FROM animals WHERE weigh BETWEEN > 10.5kg;
+SELECT name, escape_attempts FROM animals WHERE weight_kg > 10.5;
 
 /*return all data for Agumon, Gabumon, and Devimon*/
 SELECT * FROM animals WHERE neutered = TRUE;
@@ -30,4 +30,4 @@ SELECT * FROM animals WHERE neutered = TRUE;
 SELECT * FROM animals not name != 'Gabumon';
 
 /*return all data of Pikachu and Devimon*/
-SELECT * FROM animals WHERE weight >=  10.4kg AND <= 17.3kg;
+SELECT * FROM animals WHERE weight_kg >=  10.4 AND weight_kg <= 17.3;
