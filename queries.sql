@@ -1,12 +1,4 @@
 /*Queries that provide answers to the questions from all projects.*/
--- Find all animals whose name ends in "mon".
--- List the name of all animals born between 2016 and 2019.
--- List the name of all animals that are neutered and have less than 3 escape attempts.
--- List date of birth of all animals named either "Agumon" or "Pikachu".
--- List name and escape attempts of animals that weigh more than 10.5kg
--- Find all animals that are neutered.
--- Find all animals not named Gabumon.
--- Find all animals with a weight between 10.4kg and 17.3kg (including the animals with the weights that equals precisely 10.4kg or 17.3kg)
 
 /*return all data for Agumon, Gabumon, & Devimon*/
 SELECT * FROM animals WHERE name LIKE '%mon%';
@@ -31,3 +23,27 @@ SELECT * FROM animals not name != 'Gabumon';
 
 /*return all data of Pikachu and Devimon*/
 SELECT * FROM animals WHERE weight_kg >=  10.4 AND weight_kg <= 17.3;
+
+How many animals are there?
+How many animals have never tried to escape?
+What is the average weight of animals?
+Who escapes the most, neutered or not neutered animals?
+What is the minimum and maximum weight of each type of animal?
+What is the average number of escape attempts per animal type of those born between 1990 and 2000?
+Remember to add these queries to your queries.sql file.
+/*Return the total number of animals in the database*/
+SELECT COUNT(*) FROM animals;
+
+/*counts how many animals have tried to escape*/
+SELECT COUNT(*) FROM animals WHERE escape_attempts > 0;
+
+/*provides the average weight of all animals*/
+SELECT AVG(weight_kg) FROM animals;
+
+/*Provides whether neutered or non-neutered animals escape the most and provides the attempts with group that escapes the most*/
+SELECT neutered, SUM(escape_attempts) AS Total_Number_of_Escape_Attempts FROM animals WHERE escape_attempts > 0 GROUP BY neutered ORDER BY Total_Number_of_Escape_Attempts DESC LIMMIT 1;
+
+/*provides minimum & maximum weight of each type of animal*/
+SELECT species, MAX(weight_kg), MIN(weight_kg) FROM animals GROUP BY species;
+/*returns average number of escape attempts per animaltype born btn the yrs 1990 & 2000*/
+SELECT species, AVG(escape_attempts) as Average_Escape_Attempts FROM animals WHERE date_of_birth > '1990-01-01' AND date_of_birth <= '2000-12-31' GROUP BY species;
