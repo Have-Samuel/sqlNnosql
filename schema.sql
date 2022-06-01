@@ -7,6 +7,8 @@ CREATE TABLE animals (
     escape_attempts integer,
     neutered boolean,
     weight_kg decimal,
-    species string,
     PRIMARY KEY (id)
 );
+
+/*This adds the species column to the animals table*/
+ALTER TABLE animals ADD species TEXT;
