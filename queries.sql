@@ -24,19 +24,11 @@ SELECT * FROM animals not name != 'Gabumon';
 /*return all data of Pikachu and Devimon*/
 SELECT * FROM animals WHERE weight_kg >=  10.4 AND weight_kg <= 17.3;
 
--- How many animals are there?
--- How many animals have never tried to escape?
--- What is the average weight of animals?
--- Who escapes the most, neutered or not neutered animals?
--- What is the minimum and maximum weight of each type of animal?
--- What is the average number of escape attempts per animal type of those born between 1990 and 2000?
--- Remember to add these queries to your queries.sql file.
-
 /*Return the total number of animals in the database*/
 SELECT COUNT(*) FROM animals;
 
 /*counts how many animals have tried to escape*/
-SELECT COUNT(*) FROM animals WHERE escape_attempts > 0;
+SELECT COUNT(*) FROM animals WHERE escape_attempts = 0;
 
 /*provides the average weight of all animals*/
 SELECT AVG(weight_kg) FROM animals;
@@ -46,5 +38,40 @@ SELECT neutered, SUM(escape_attempts) AS Total_Number_of_Escape_Attempts FROM an
 
 /*provides minimum & maximum weight of each type of animal*/
 SELECT species, MAX(weight_kg), MIN(weight_kg) FROM animals GROUP BY species;
+
 /*returns average number of escape attempts per animaltype born btn the yrs 1990 & 2000*/
 SELECT species, AVG(escape_attempts) as Average_Escape_Attempts FROM animals WHERE date_of_birth > '1990-01-01' AND date_of_birth <= '2000-12-31' GROUP BY species;
+
+/*Transaction*/
+/*Add 'Unspecified' as Species for each animal in the entire table then ROLLBACK the change*/
+BEGIN;
+UPDATE animals SET species = 'unspecified'
+ROLLBACK;
+
+/*Set Species to DIGIMON and POKEMON for all named animals with 'mon' in the name. Then sets Species to POKEMON for each remaining animal without a special sset. 
+This is a commit Transaction [permanentchange]*/
+BEGIN;
+UPDATE animals SET species = 'DIGIMON' WHERE name like '%mon%';
+UPDATE animals SET species = 'POKEMON' WHERE species is NULL;
+COMMIT;
+
+/* Delete All records in the database, then rollback the delete to bring all of the data*/
+BEGIN;
+DELETE FROM animals;
+ROLLBACK;
+
+/*Deletes all animals born after January 1st 2022, 
+makes a savepoint after the deletion,
+updates all animals to the product of their weight_kg * -1,
+rolls-back to the previous savepoint,
+multiplies the weight of ONLY animals with negative weight_kg to the product of weightKG * -1.
+This is a COMMIT Transaction (permanent change).
+RESULT: All remaining animals have positive weight values*/
+
+BEGIN;
+DELETE FROM animals WHERE date_of_birth > '2022-01-01';
+SAVEPOINT SP1;
+UPDATE animals SET weight_kg = weight_kg * -1;
+ROLLBACK TO SP1;
+UPDATE animals SET weight_kg = weight_kg * -1 WHERE weight_kg < 0;
+COMMIT;
