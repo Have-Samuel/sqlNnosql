@@ -24,13 +24,14 @@ SELECT * FROM animals not name != 'Gabumon';
 /*return all data of Pikachu and Devimon*/
 SELECT * FROM animals WHERE weight_kg >=  10.4 AND weight_kg <= 17.3;
 
-How many animals are there?
-How many animals have never tried to escape?
-What is the average weight of animals?
-Who escapes the most, neutered or not neutered animals?
-What is the minimum and maximum weight of each type of animal?
-What is the average number of escape attempts per animal type of those born between 1990 and 2000?
-Remember to add these queries to your queries.sql file.
+-- How many animals are there?
+-- How many animals have never tried to escape?
+-- What is the average weight of animals?
+-- Who escapes the most, neutered or not neutered animals?
+-- What is the minimum and maximum weight of each type of animal?
+-- What is the average number of escape attempts per animal type of those born between 1990 and 2000?
+-- Remember to add these queries to your queries.sql file.
+
 /*Return the total number of animals in the database*/
 SELECT COUNT(*) FROM animals;
 
