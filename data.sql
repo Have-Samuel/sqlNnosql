@@ -34,16 +34,22 @@ UPDATE animals SET owner_id = 3 WHERE name IN ('Devimon', 'Plantmon');
 UPDATE animals SET owner_id = 4 WHERE name IN ('Charmander', 'Squirtle', 'Blossom');
 UPDATE animals SET owner_id = 5 WHERE name IN ('Angemon', 'Boarmon');
 
-Vet William Tatcher is 45 years old and graduated Apr 23rd, 2000.
-Vet Maisy Smith is 26 years old and graduated Jan 17th, 2019.
-Vet Stephanie Mendez is 64 years old and graduated May 4th, 1981.
-Vet Jack Harkness is 38 years old and graduated Jun 8th, 2008.
+INSERT INTO vets (full_name, age, date_of_graduation) VALUES ('William Tatcher', '45', '2000-04-23');
+INSERT INTO vets (full_name, age, date_of_graduation) VALUES ('Maisy Smith', '26', '2019-01-17');
+INSERT INTO vets (full_name, age, date_of_graduation) VALUES ('Stephanie Mendez', '64', '1981-05-04');
+INSERT INTO vets (full_name, age, date_of_graduation) VALUES ('Jack Harkness', '38', '2008-06-08');
 
-INSERT INTO vets (id, full_name, age, date_of_graduation)
-VALUES (11, 'William Tatcher', '45', '2000-04-23');
-INSERT INTO vets (id, full_name, age, date_of_graduation)
-VALUES (11, 'Maisy Smith', '26', '2019-01-17');
-INSERT INTO vets (id, full_name, age, date_of_graduation)
-VALUES (11, 'Stephanie Mendez', '64', '1981-05-04');
-INSERT INTO vets (id, full_name, age, date_of_graduation)
-VALUES (11, 'Jack Harkness', '38', '2008-06-08');
+INSERT INTO specialization (species_id, vet_id) VALUES(
+  (SELECT id FROM species WHERE name = 'Pokemon'),
+  (SELECT id FROM vets WHERE name = 'William Tatcher')),
+  ((SELECT id FROM  species WHERE name = 'Digimon'),
+  (SELECT id FROM vets WHERE name = 'Stephanie Mendez')),
+  ((SELECT id FROM species WHERE name = 'Pokemon'),
+  (SELECT id FROM vets WHERE name  = 'Stephanie Mendez')),
+  ((SELECT id FROM species WHERE name = 'Digimon'),
+  (SELECT id FROM vets WHERE name = 'Jack Harkness'));
+
+INSERT INTO specialization (name, animal_specialized_in)
+VALUES('Stephanie Mendez', 'Digimon and Pokemon');
+INSERT INTO specialization (name, animal_specialized_in)
+VALUES('Jack Harkness', 'Digimon');
