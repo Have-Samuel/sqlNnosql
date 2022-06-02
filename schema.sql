@@ -27,9 +27,11 @@ CREATE TABLE species (
     PRIMARY KEY (id)
 );
 
+/*Join Tables*/
+
 CREATE TABLE vets (
     id INT GENERATED ALWAYS AS IDENTITY,
-    name varchar(100),
+    full_name varchar(100),
     age INT,
     date_of_graduation date
 );
@@ -39,7 +41,7 @@ CREATE TABLE specialization (
 );
 
 CREATE TABLE visits (
-    
+
 );
 
 ALTER TABLE animals DROP COLUMN species;
