@@ -27,6 +27,13 @@ CREATE TABLE species (
     PRIMARY KEY (id)
 );
 
+CREATE TABLE vets (
+    id INT GENERATED ALWAYS AS IDENTITY,
+    name varchar(100),
+    age INT,
+    date_of_graduation date
+);
+
 ALTER TABLE animals DROP COLUMN species;
 
 ALTER TABLE animals ADD species_id INT;
