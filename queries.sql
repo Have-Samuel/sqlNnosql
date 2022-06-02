@@ -75,3 +75,38 @@ UPDATE animals SET weight_kg = weight_kg * -1;
 ROLLBACK TO SP1;
 UPDATE animals SET weight_kg = weight_kg * -1 WHERE weight_kg < 0;
 COMMIT;
+
+-- Write queries (using JOIN) to answer the following questions:
+-- What animals belong to Melody Pond?
+-- List of all animals that are pokemon (their type is Pokemon).
+-- List all owners and their animals, remember to include those that dont own any animal.
+-- How many animals are there per species?
+-- List all Digimon owned by Jennifer Orwell.
+-- List all animals owned by Dean Winchester that havent tried to escape.
+-- Who owns the most animals?
+
+SELECT COUNT(name) AS Animals FROM animals;
+
+SELECT COUNT(name) AS Animals_never_tried_to_escape FROM animals WHERE escape_attempts = 0;
+
+SELECT AVG(weight_kg) AS Average_weight FROM animals;
+
+SELECT neutered, MAX(escape_attempts) FROM animals GROUP BY neutered;
+
+SELECT species, MIN(weight_kg), MAX(weight_kg) FROM animals GROUP BY species;
+
+SELECT species, AVG(escape_attempts) FROM animals WHERE date_of_birth BETWEEN '1990-01-01' AND '2000-12-31' GROUP BY species;
+
+SELECT name, owner_id, full_name FROM animals INNER JOIN owners ON owner_id = owner.id WHERE owner_id = 4;
+
+SELECT animals.name, species_id, species.name FROM animals INNER JOIN species ON species_id = species.id WHERE species_id = 1;
+
+SELECT full_name, animals.name, owner_id FROM owners LEFT JOIN animals ON owner_id = owners.id;
+
+SELECT COUNT(animals) as Animals, species_id, species.name FROM animals INNER JOIN species ON species_id = species.id GROUP BY species_id, species.name;
+
+SELECT animals.name, species_id, species.name, owner_id, full_name FROM animals INNER JOIN species ON species_id = species.id INNER JOIN owners ON owner_id = owners.id WHERE owner_id = 2 AND species_id = 2;
+
+SELECT animals.name, species_id, escape_attempts, owner_id, full_name, FROM animals INNER JOIN owners ON owner_id = owners.id WHERE owner_id = 5 AND escape_attempts = 0;
+
+SELECT owner_id, full_name, COUNT(animals) AS Number_of_animals FROM animals INNER JOIN owners ON owner_id = owners.id GROUP BY owner_id, full_name ORDER BY Number_of_animals desc;
