@@ -35,8 +35,12 @@ CREATE TABLE vets (
 );
 
 CREATE TABLE specialization (
+
+);
+
+CREATE TABLE visits (
     
-)
+);
 
 ALTER TABLE animals DROP COLUMN species;
 
