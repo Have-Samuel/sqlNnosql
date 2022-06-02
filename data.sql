@@ -50,7 +50,7 @@ INSERT INTO specialization (species_id, vet_id) VALUES(
   (SELECT id FROM vets WHERE name = 'Jack Harkness'));
 
 INSERT INTO visits (animal_id, vet_id, date_of_visit) VALUES(
-  (SELECT id FROM animas WHERE name = 'Agumon'),
+  (SELECT id FROM animals WHERE name = 'Agumon'),
   (SELECT id FROM vets WHERE NAME = 'William Tatcher'), 'May 24 2020'),
   ((SELECT id FROM animals WHERE name = 'Agumon'),
   (SELECT id FROM vets WHERE = 'Stephanie Mendaz'), 'July 22, 2020'),
@@ -87,4 +87,4 @@ INSERT INTO visits (animal_id, vet_id, date_of_visit) VALUES(
   ((SELECT id FROM animals WHERE name = 'Blossom'),
   (SELECT id FROM vets WHERE name = 'Stephanie Mendez'), 'May 24, 2020'), 
   ((SELECT id FROM animals WHERE name = 'Blossom'),
-  (SELECT id FROM vets WHERE name = 'Wiliam Tatcher'), 'January 11, 2021')
+  (SELECT id FROM vets WHERE name = 'William Tatcher'), 'January 11, 2021')
