@@ -34,6 +34,10 @@ CREATE TABLE vets (
     date_of_graduation date
 );
 
+CREATE TABLE specialization (
+    
+)
+
 ALTER TABLE animals DROP COLUMN species;
 
 ALTER TABLE animals ADD species_id INT;
