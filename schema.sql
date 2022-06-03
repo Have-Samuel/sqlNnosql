@@ -11,20 +11,18 @@ CREATE TABLE animals (
 );
 
 /*This adds the species column to the animals table*/
+
 ALTER TABLE animals ADD species TEXT;
 
-
 CREATE TABLE owners (
-    id INT GENERATED ALWAYS AS IDENTITY,
+    id SERIAL PRIMARY KEY,
     full_name varchar(240),
     age INT,
-    PRIMARY KEY(id)
 );
 
 CREATE TABLE species (
-    id INT GENERATED ALWAYS AS IDENTITY,
+    id SERIAL PRIMARY KEY,
     name varchar (100),
-    PRIMARY KEY (id)
 );
 
 ALTER TABLE animals DROP COLUMN species;
@@ -33,4 +31,24 @@ ALTER TABLE animals ADD species_id INT;
 ALTER TABLE animals ADD CONSTRAINT fk_species FOREIGN KEY (species_id) REFERENCES species(id) ON DELETE CASCADE;
 
 ALTER TABLE animals ADD owner_id INT;
-ALTER TABLE animals ADD CONSTRAINT fk_owner FOREIGN KEY (owner_id) REFERENCES owner(id) ON DELETE CASCADE;
+ALTER TABLE animals ADD CONSTRAINT fk_owner FOREIGN KEY (owner_id) REFERENCES owners(id) ON DELETE CASCADE;
+
+/*Join Tables*/
+
+CREATE TABLE vets (
+    id SERIAL PRIMARY KEY,
+    name varchar(100),
+    age INT,
+    date_of_graduation date
+);
+
+CREATE TABLE specialization (
+    species_id INT,
+    vet_id INT
+);
+
+CREATE TABLE visits (
+    animal_id INT,
+    vet_id INT,
+    date_of_visit data
+);

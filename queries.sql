@@ -60,14 +60,6 @@ BEGIN;
 DELETE FROM animals;
 ROLLBACK;
 
-/*Deletes all animals born after January 1st 2022, 
-makes a savepoint after the deletion,
-updates all animals to the product of their weight_kg * -1,
-rolls-back to the previous savepoint,
-multiplies the weight of ONLY animals with negative weight_kg to the product of weightKG * -1.
-This is a COMMIT Transaction (permanent change).
-RESULT: All remaining animals have positive weight values*/
-
 BEGIN;
 DELETE FROM animals WHERE date_of_birth > '2022-01-01';
 SAVEPOINT SP1;
@@ -76,18 +68,9 @@ ROLLBACK TO SP1;
 UPDATE animals SET weight_kg = weight_kg * -1 WHERE weight_kg < 0;
 COMMIT;
 
--- Write queries (using JOIN) to answer the following questions:
--- What animals belong to Melody Pond?
--- List of all animals that are pokemon (their type is Pokemon).
--- List all owners and their animals, remember to include those that dont own any animal.
--- How many animals are there per species?
--- List all Digimon owned by Jennifer Orwell.
--- List all animals owned by Dean Winchester that havent tried to escape.
--- Who owns the most animals?
+SELECT COUNT(name) AS animals FROM animals;
 
-SELECT COUNT(name) AS Animals FROM animals;
-
-SELECT COUNT(name) AS Animals_never_tried_to_escape FROM animals WHERE escape_attempts = 0;
+SELECT COUNT(name) AS animals_never_tried_to_escape FROM animals WHERE escape_attempts = 0;
 
 SELECT AVG(weight_kg) AS Average_weight FROM animals;
 
@@ -103,10 +86,31 @@ SELECT animals.name, species_id, species.name FROM animals INNER JOIN species ON
 
 SELECT full_name, animals.name, owner_id FROM owners LEFT JOIN animals ON owner_id = owners.id;
 
-SELECT COUNT(animals) as Animals, species_id, species.name FROM animals INNER JOIN species ON species_id = species.id GROUP BY species_id, species.name;
+SELECT COUNT(animals) as animals, species_id, species.name FROM animals INNER JOIN species ON species_id = species.id GROUP BY species_id, species.name;
 
 SELECT animals.name, species_id, species.name, owner_id, full_name FROM animals INNER JOIN species ON species_id = species.id INNER JOIN owners ON owner_id = owners.id WHERE owner_id = 2 AND species_id = 2;
 
 SELECT animals.name, species_id, escape_attempts, owner_id, full_name, FROM animals INNER JOIN owners ON owner_id = owners.id WHERE owner_id = 5 AND escape_attempts = 0;
 
 SELECT owner_id, full_name, COUNT(animals) AS Number_of_animals FROM animals INNER JOIN owners ON owner_id = owners.id GROUP BY owner_id, full_name ORDER BY Number_of_animals desc;
+
+/*answers*/
+
+SELECT animals.name, visits.date_of_visit FROM visits JOIN animals ON animals.id = visits.animal_id JOIN vets ON vets.id = visits.vet_id WHERE vets.name = 'William Tacther' ORDER BY visits.date_of_visit desc
+Limit 1;
+
+SELECT DISTINCT animals.name FROM visits JOIN animals ON animals.id = visits.animal_id JOIN vets ON vets.id = visits.vet_id WHERE vets.name = 'Stephanie Mendez';
+
+SELECT vets.name, species.name FROM vets JOIN specialization ON vets.id = specialization.vet OR vets.id != specialization.vet_id JOIN species ON specialization.species_id = species.id;
+
+SELECT animals.name, visits.date_of_visit FROM visits JOIN animals ON animals.id = visits.vet_id JOIN ON vets.id = visits.vets_id WHERE vets.name = 'Stephanie Mendez' AND date_of_visit > 'April_1, 2020' AND date_of_visit < 'August 30, 2020'
+
+SELECT animals.name, COUNT(animals.name) FROM visits JOIN animals ON animals.id = visits.animal_id GROUP BY (animals.name) ORDER BY COUNT(animals.name) desc
+
+SELECT animals.name, visits.date_of_visit FROM visits JOIN animals ON animals.id = visits.animal_id JOIN vets ON vets.id = visits.vet_id WHERE vets.name = 'Maisy Smith' ORDER BY visits.date_of_visit ASC LIMIT 1;
+
+SELECT animals.*, nets.*, visits.date_of_visit FROM visits JOIN aniamls ON animals.id = visits.vet_id ORDER BY visits.date_of_visit DESC LIMIT 1;
+
+SELECT COUNT(*) FROM visits JOIN animals ON animals.id = visits.animal_id JOIN vets ON vets_id = visits.vet_id WHERE animals.species_id NOT IN (SELECT species_id FROM specialization WHERE vets_id = vets);
+
+SELECT species.name, COUNT(*) FROM visits JOIN animals ON animals.id = species.id JOIN vets ON vets_id = visits.vet_id WHERE vets.name = 'Maisy Smith' GROUP By species.name;
