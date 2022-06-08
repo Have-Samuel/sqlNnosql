@@ -17,7 +17,7 @@ ALTER TABLE animals ADD species TEXT;
 CREATE TABLE owners (
     id SERIAL PRIMARY KEY,
     full_name varchar(240),
-    age INT,
+    age INT
 );
 
 CREATE TABLE species (
@@ -50,5 +50,19 @@ CREATE TABLE specialization (
 CREATE TABLE visits (
     animal_id INT,
     vet_id INT,
-    date_of_visit data
+    date_of_visit date
 );
+
+BEGIN;
+ALTER TABLE visits
+RENAME COLUMN animals_id TO animal_id;
+ALTER TABLE visits
+RENAME COLUMN vets_id TO vet_id;
+ALTER TABLE visits
+RENAME COLUMN date TO date_of_visit;
+COMMIT;
+
+-- Add an email column to your owners table
+ALTER TABLE owners
+ADD COLUMN email VARCHAR(120);
+COMMIT;

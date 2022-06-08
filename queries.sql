@@ -96,8 +96,7 @@ SELECT owner_id, full_name, COUNT(animals) AS Number_of_animals FROM animals INN
 
 /*answers*/
 
-SELECT animals.name, visits.date_of_visit FROM visits JOIN animals ON animals.id = visits.animal_id JOIN vets ON vets.id = visits.vet_id WHERE vets.name = 'William Tacther' ORDER BY visits.date_of_visit desc
-Limit 1;
+SELECT animals.name, visits.date_of_visit FROM visits JOIN animals ON animals.id = visits.animal_id JOIN vets ON vets.id = visits.vet_id WHERE vets.name = 'William Tacther' ORDER BY visits.date_of_visit desc Limit 1;
 
 SELECT DISTINCT animals.name FROM visits JOIN animals ON animals.id = visits.animal_id JOIN vets ON vets.id = visits.vet_id WHERE vets.name = 'Stephanie Mendez';
 
@@ -114,3 +113,10 @@ SELECT animals.*, nets.*, visits.date_of_visit FROM visits JOIN aniamls ON anima
 SELECT COUNT(*) FROM visits JOIN animals ON animals.id = visits.animal_id JOIN vets ON vets_id = visits.vet_id WHERE animals.species_id NOT IN (SELECT species_id FROM specialization WHERE vets_id = vets);
 
 SELECT species.name, COUNT(*) FROM visits JOIN animals ON animals.id = species.id JOIN vets ON vets_id = visits.vet_id WHERE vets.name = 'Maisy Smith' GROUP By species.name;
+
+
+EXPLAIN ANALYZE SELECT COUNT(*) FROM visits where animal_id = 4;
+
+EXPLAIN ANALYZE SELECT * FROM visits where vet_id = 2;
+
+EXPLAIN ANALYZE SELECT * FROM owners where email = 'owner_18327@mail.com';
