@@ -1,9 +1,9 @@
 # VET-CLINIC
 
 > This repo is to demonstrate my understanding of SQL database management. The files here would create a database in PostgreSQL and update/locate data within the database.
-
+![Vet Clinic Diagram](./Vet_Clinic-diagram.png)
 ## Getting Started
-
+!
 This repository includes files with plain SQL that can be used to recreate a database:
 
 - Use [schema.sql](./schema.sql) to create all tables.
