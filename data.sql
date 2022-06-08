@@ -88,3 +88,26 @@ INSERT INTO visits (animal_id, vet_id, date_of_visit) VALUES(
   (SELECT id FROM vets WHERE name = 'Stephanie Mendez'), 'May 24, 2020'), 
   ((SELECT id FROM animals WHERE name = 'Blossom'),
   (SELECT id FROM vets WHERE name = 'William Tatcher'), 'January 11, 2021')
+
+/*(1 sec = 1000ms can be considered as too much time for database query)*/
+BEGIN;
+INSERT INTO visits (animal_id, vet_id, date_of_visit)
+SELECT * FROM (SELECT id FROM animals) animal_ids, (SELECT id FROM vets) vets_ids, generate_series('1980-01-01'::timestamp, '2021-01-01', '4 hours') visit_timestamp;
+insert into owners (full_name, email) select 'Owner ' || generate_series(1,2500000), 'owner_' || generate_series(1,2500000) || '@mail.com';
+COMMIT;
+
+-- Indexification 
+BEGIN;
+create INDEX index_animal_id on visits(
+  animal_id
+);
+
+create INDEX index_vet_id on visits(
+  vet_id
+);
+
+create INDEX index_email on owners(
+  email
+);
+COMMIT;
+
